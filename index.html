@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Genetics. Their Survival. | VitalMatch Initiative</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #050505; color: #ffffff; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+        
+        /* Navigation Styles */
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(220, 38, 38, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.15);
+        }
+        
+        .neon-red { color: #dc2626; }
+        .bg-neon-red { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
+        
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        .cell {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.4), rgba(220, 38, 38, 0.1));
+            animation: drift 20s infinite;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.2); }
+            66% { transform: translate(-100px, 100px) scale(0.8); }
+        }
+        
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(180deg, transparent, #dc2626, transparent);
+            transform: translateX(-50%);
+        }
+        
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0; opacity: 0; overflow: hidden;
+        }
+        #mobile-menu.open { max-height: 500px; opacity: 1; }
+
+        .video-placeholder {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .video-placeholder:hover { background: linear-gradient(135deg, rgba(220, 38, 38, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%); }
+        
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .accordion-content.active { max-height: 1000px; }
+        
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #dc2626 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        
+        .pulse-ring { animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #dc2626 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+    </style>
+</head>
+<body class="pt-16">
+    
+    <nav class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold font-space-grotesk tracking-tighter flex items-center">
+                    <i class="fas fa-dna text-red-600 mr-2"></i>VitalMatch<span class="text-red-600">.</span>
+                </a>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#learn-more" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">The Science</a>
+                    <a href="#process" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Process</a>
+                    <a href="#eligibility" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Eligibility</a>
+                    <a href="#return-options" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Return Kit</a>
+                    <a href="#faq" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">FAQ</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <a href="https://www.dkms-bmst.org/register" target="_blank" class="hidden md:inline-block bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all">
+                        Register Now
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="md:hidden mt-4 border-t border-gray-800">
+                <div class="flex flex-col space-y-4 py-4">
+                    <a href="#learn-more" class="text-gray-300 hover:text-white px-2" onclick="toggleMobileMenu()">The Science</a>
+                    <a href="#process" class="text-gray-300 hover:text-white px-2" onclick="toggleMobileMenu()">Process</a>
+                    <a href="#eligibility" class="text-gray-300 hover:text-white px-2" onclick="toggleMobileMenu()">Eligibility</a>
+                    <a href="#return-options" class="text-gray-300 hover:text-white px-2" onclick="toggleMobileMenu()">Return Kit</a>
+                    <a href="#faq" class="text-gray-300 hover:text-white px-2" onclick="toggleMobileMenu()">FAQ</a>
+                    <a href="https://www.dkms-bmst.org/register" target="_blank" class="bg-red-600 text-center py-3 rounded-lg font-bold mx-2">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden py-12 md:py-0">
+        <div class="cell" style="width: 100px; height: 100px; top: 10%; left: 10%; animation-delay: 0s;"></div>
+        <div class="cell" style="width: 150px; height: 150px; top: 60%; left: 80%; animation-delay: 3s;"></div>
+        <div class="cell" style="width: 80px; height: 80px; top: 80%; left: 20%; animation-delay: 6s;"></div>
+        <div class="cell" style="width: 120px; height: 120px; top: 30%; left: 70%; animation-delay: 9s;"></div>
+        
+        <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <div class="text-center max-w-5xl mx-auto">
+                <div class="mb-6 md:mb-8 animate-float">
+                    <i class="fas fa-dna text-5xl md:text-6xl neon-red mb-4"></i>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                    Your <span class="gradient-text">Genetics</span>.<br>Their <span class="gradient-text">Survival</span>.
+                </h1>
+                <p class="text-lg md:text-2xl text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto px-2">
+                    Every 3 minutes, someone in India is diagnosed with blood cancer. Their only hope? A matching stem cell donor. That donor could be <span class="neon-red font-semibold">you</span>.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 w-full px-4">
+                    <a href="https://www.dkms-bmst.org/register" target="_blank" class="w-full sm:w-auto bg-neon-red px-8 py-4 md:px-10 md:py-5 rounded-full text-lg font-semibold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-red-500/50 pulse-ring text-center">
+                        <i class="fas fa-hand-holding-heart mr-2"></i> Register Now - Free & 5 Minutes
+                    </a>
+                    <a href="#learn-more" class="w-full sm:w-auto border-2 border-white/20 px-8 py-4 rounded-full text-lg font-semibold hover:border-red-600 hover:text-red-600 transition-all duration-300 text-center">
+                        Learn How It Works <i class="fas fa-arrow-down ml-2"></i>
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-16">
+                    <div class="glass-card p-4 md:p-6">
+                        <div class="stat-number">30k+</div>
+                        <p class="text-xs md:text-sm text-gray-400 mt-2">New Cases Annually</p>
+                    </div>
+                    <div class="glass-card p-4 md:p-6">
+                        <div class="stat-number">1 in 1M</div>
+                        <p class="text-xs md:text-sm text-gray-400 mt-2">Chance of Match</p>
+                    </div>
+                    <div class="glass-card p-4 md:p-6">
+                        <div class="stat-number">70%</div>
+                        <p class="text-xs md:text-sm text-gray-400 mt-2">Need Unrelated Donors</p>
+                    </div>
+                    <div class="glass-card p-4 md:p-6">
+                        <div class="stat-number">0₹</div>
+                        <p class="text-xs md:text-sm text-gray-400 mt-2">Cost to You</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-5 md:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
+            <i class="fas fa-chevron-down text-2xl text-red-600"></i>
+        </div>
+    </section>
+
+    <section id="learn-more" class="py-16 md:py-24 px-4 md:px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">The Science Behind <span class="neon-red">The Match</span></h2>
+                <p class="text-lg md:text-xl text-gray-400">Why finding a donor is like searching for a genetic twin</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
+                <div class="glass-card p-6 md:p-8 fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-microscope text-3xl md:text-4xl neon-red mr-4"></i>
+                        <h3 class="text-xl md:text-2xl font-bold">It's Not About Blood Type</h3>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed mb-4 text-sm md:text-base">
+                        While blood type matters for transfusions, stem cell donation requires matching <strong class="text-white">Human Leukocyte Antigens (HLA)</strong> - proteins found on most cells in your body. These act as your immune system's identification markers.
+                    </p>
+                    <div class="bg-black/30 p-4 rounded-lg border border-red-900/30">
+                        <p class="text-sm text-gray-400"><i class="fas fa-info-circle neon-red mr-2"></i> <strong>HLA markers</strong> are inherited from both parents. You have a 25% chance of matching a sibling, but only a 1 in 1 million chance with a stranger.</p>
+                    </div>
+                </div>
+                
+                <div class="glass-card p-6 md:p-8 fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-users text-3xl md:text-4xl neon-red mr-4"></i>
+                        <h3 class="text-xl md:text-2xl font-bold">The Diversity Problem</h3>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed mb-4 text-sm md:text-base">
+                        HLA markers are ethnically linked. Indians have unique genetic profiles, but our representation in global registries is critically low. Only <strong class="text-red-400">0.04%</strong> of India's population is registered as potential donors.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <div class="w-2/3 bg-gray-800 rounded-full h-3 mr-3">
+                                <div class="bg-gradient-to-r from-red-600 to-red-400 h-3 rounded-full" style="width: 30%"></div>
+                            </div>
+                            <span class="text-xs md:text-sm text-gray-400">30% of patients find no match</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6 md:p-10 fade-in">
+                <div class="flex flex-col md:flex-row items-start mb-6">
+                    <i class="fas fa-atom text-4xl md:text-5xl neon-red mr-6 mb-4 md:mb-0 mt-2"></i>
+                    <div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-4">How HLA Matching Works</h3>
+                        <p class="text-gray-300 leading-relaxed mb-6 text-sm md:text-base">
+                            Your immune system uses HLA markers to distinguish "self" from "foreign." A transplant requires at least a 10/10 match across key HLA genes (A, B, C, DR, DQ). Even a 9/10 match can cause graft rejection or Graft-versus-Host Disease (GvHD).
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-black/40 p-4 rounded-lg border border-gray-800">
+                                <p class="text-red-400 font-bold text-lg mb-2">10/10 Match</p>
+                                <p class="text-xs md:text-sm text-gray-400">Ideal scenario for transplant success</p>
+                            </div>
+                            <div class="bg-black/40 p-4 rounded-lg border border-gray-800">
+                                <p class="text-yellow-400 font-bold text-lg mb-2">9/10 Match</p>
+                                <p class="text-xs md:text-sm text-gray-400">Higher risk of complications</p>
+                            </div>
+                            <div class="bg-black/40 p-4 rounded-lg border border-gray-800">
+                                <p class="text-gray-500 font-bold text-lg mb-2">&lt;8/10 Match</p>
+                                <p class="text-xs md:text-sm text-gray-400">Usually not viable for transplant</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 md:mt-12 text-center fade-in">
+                <div class="glass-card p-6 md:p-8 inline-block">
+                    <p class="text-xl md:text-2xl font-semibold mb-2">Every registration increases survival odds</p>
+                    <p class="text-gray-400 text-sm md:text-base">Especially for Indian patients who desperately need ethnically matched donors</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-20 px-4 md:px-6 bg-gradient-to-b from-black to-red-950/10">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">The Numbers That <span class="neon-red">Matter</span></h2>
+                <p class="text-lg md:text-xl text-gray-400">Understanding the global impact and urgent need</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+                <div class="glass-card p-6 md:p-8 text-center fade-in">
+                    <i class="fas fa-heartbeat text-4xl md:text-5xl neon-red mb-4"></i>
+                    <div class="stat-number mb-2">12M+</div>
+                    <p class="text-lg text-gray-300 mb-2">Registered Donors Worldwide</p>
+                    <p class="text-sm text-gray-500">But only 500,000 from India</p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-8 text-center fade-in">
+                    <i class="fas fa-clock text-4xl md:text-5xl neon-red mb-4"></i>
+                    <div class="stat-number mb-2">3 min</div>
+                    <p class="text-lg text-gray-300 mb-2">A New Diagnosis in India</p>
+                    <p class="text-sm text-gray-500">That's 480 people per day</p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-8 text-center fade-in">
+                    <i class="fas fa-user-check text-4xl md:text-5xl neon-red mb-4"></i>
+                    <div class="stat-number mb-2">1 in 1M</div>
+                    <p class="text-lg text-gray-300 mb-2">Chance of Finding a Match</p>
+                    <p class="text-sm text-gray-500">A very rare genetic bond</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 md:mt-12 glass-card p-6 md:p-8 fade-in">
+                <h3 class="text-xl md:text-2xl font-bold mb-6 text-center">Global Registry Gaps</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-gray-400 mb-2">Caucasian Patients</p>
+                        <div class="w-full bg-gray-800 rounded-full h-4">
+                            <div class="bg-green-500 h-4 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">75% find a match</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 mb-2">South Asian Patients</p>
+                        <div class="w-full bg-gray-800 rounded-full h-4">
+                            <div class="bg-red-600 h-4 rounded-full" style="width: 30%"></div>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-1">Only 30% find a match</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="py-16 md:py-24 px-4 md:px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Your Journey to <span class="neon-red">Save a Life</span></h2>
+                <p class="text-lg md:text-xl text-gray-400">Simple, safe, and completely free</p>
+            </div>
+            
+            <div class="relative">
+                <div class="timeline-line hidden md:block"></div>
+                
+                <div class="space-y-12">
+                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 fade-in">
+                        <div class="md:w-1/2 md:text-right w-full">
+                            <div class="glass-card p-6 md:p-8 inline-block w-full">
+                                <div class="flex items-center md:justify-end mb-4">
+                                    <h3 class="text-xl md:text-2xl font-bold mr-4">Step 1: Online Registration</h3>
+                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-neon-red rounded-full flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">1</div>
+                                </div>
+                                <p class="text-gray-300 leading-relaxed mb-3 text-sm md:text-base">
+                                    Visit <a href="https://www.dkms-bmst.org/register" target="_blank" class="text-red-400 hover:underline">dkms-bmst.org/register</a> and fill out a quick form with your basic details. Takes less than 5 minutes.
+                                </p>
+                                <p class="text-sm text-gray-500"><i class="fas fa-shield-alt text-green-400 mr-2"></i>Your data is encrypted and anonymized</p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 w-full hidden md:block">
+                            <div class="glass-card p-6">
+                                <i class="fas fa-laptop-medical text-5xl md:text-6xl neon-red mb-4"></i>
+                                <p class="text-sm text-gray-400">Secure HTTPS connection • GDPR Compliant</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-8 fade-in">
+                        <div class="md:w-1/2 md:text-left w-full">
+                            <div class="glass-card p-6 md:p-8 inline-block w-full">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-neon-red rounded-full flex items-center justify-center text-xl md:text-2xl font-bold mr-4 flex-shrink-0">2</div>
+                                    <h3 class="text-xl md:text-2xl font-bold">Swab Kit Arrives</h3>
+                                </div>
+                                <p class="text-gray-300 leading-relaxed mb-3 text-sm md:text-base">
+                                    Within 7-10 days, you'll receive a free home swab kit via India Post/courier. No hospital visits needed.
+                                </p>
+                                <p class="text-sm text-gray-500"><i class="fas fa-box text-blue-400 mr-2"></i>Contents: 3 sterile swabs, instructions, prepaid return envelope</p>
+                            </div>
+                        </div>
+                         <div class="md:w-1/2 w-full hidden md:block">
+                            <div class="glass-card p-6">
+                                <i class="fas fa-box-open text-5xl md:text-6xl neon-red mb-4"></i>
+                                <p class="text-sm text-gray-400">Delivered to your doorstep • No signature required</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 fade-in">
+                        <div class="md:w-1/2 md:text-right w-full">
+                            <div class="glass-card p-6 md:p-8 inline-block w-full">
+                                <div class="flex items-center md:justify-end mb-4">
+                                    <h3 class="text-xl md:text-2xl font-bold mr-4">Step 3: The Swab Process</h3>
+                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-neon-red rounded-full flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">3</div>
+                                </div>
+                                <p class="text-gray-300 leading-relaxed mb-3 text-sm md:text-base">
+                                    Gently swab the inside of each cheek for 60 seconds. Use all 3 swabs. <strong class="text-white">Do not eat, drink, or smoke 30 minutes before.</strong>
+                                </p>
+                                <p class="text-sm text-gray-500"><i class="fas fa-video text-purple-400 mr-2"></i>Video tutorial available</p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 w-full">
+                            <div id="video-section" class="glass-card p-4 md:p-6">
+                                <div id="video-placeholder" class="video-placeholder rounded-lg h-48 md:h-64 flex flex-col items-center justify-center" onclick="loadVideo()">
+                                    <div class="text-center">
+                                        <i class="fas fa-play-circle text-5xl md:text-7xl neon-red mb-4"></i>
+                                        <p class="text-base md:text-lg font-semibold">Click to Load Instructional Video</p>
+                                        <p class="text-xs md:text-sm text-gray-500 mt-2">Watch how to properly collect your sample</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <a href="https://www.youtube.com/watch?v=hKH7GwX2JrA" target="_blank" class="text-red-400 text-sm hover:text-white underline">
+                                        <i class="fab fa-youtube mr-1"></i> Watch on YouTube if video doesn't load
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-8 fade-in">
+                        <div class="md:w-1/2 md:text-left w-full">
+                            <div class="glass-card p-6 md:p-8 inline-block w-full">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-neon-red rounded-full flex items-center justify-center text-xl md:text-2xl font-bold mr-4 flex-shrink-0">4</div>
+                                    <h3 class="text-xl md:text-2xl font-bold">Drying Time</h3>
+                                </div>
+                                <p class="text-gray-300 leading-relaxed mb-3 text-sm md:text-base">
+                                    Place swabs on the provided drying sheet. Let them air-dry for <strong class="text-white">at least 60 minutes</strong>. Do not seal them while damp.
+                                </p>
+                                <div class="bg-yellow-900/20 border border-yellow-700/50 p-3 rounded-lg mt-3">
+                                    <p class="text-sm text-yellow-400"><i class="fas fa-exclamation-triangle mr-2"></i><strong>Critical:</strong> Moisture degrades DNA. Ensure complete drying.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 w-full hidden md:block">
+                            <div class="glass-card p-6">
+                                <i class="fas fa-wind text-5xl md:text-6xl neon-red mb-4"></i>
+                                <p class="text-sm text-gray-400">Keep in a clean, dry area • Avoid direct sunlight</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="return-options" class="flex flex-col md:flex-row items-center gap-6 md:gap-8 fade-in">
+                        <div class="md:w-1/2 md:text-right w-full">
+                            <div class="glass-card p-6 md:p-8 inline-block w-full">
+                                <div class="flex items-center md:justify-end mb-4">
+                                    <h3 class="text-xl md:text-2xl font-bold mr-4">Step 5: Return via Post or WhatsApp</h3>
+                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-neon-red rounded-full flex items-center justify-center text-xl md:text-2xl font-bold flex-shrink-0">5</div>
+                                </div>
+                                <p class="text-gray-300 leading-relaxed mb-3 text-sm md:text-base">
+                                    Seal dried swabs in the biohazard bag and place in the envelope.
+                                </p>
+                                <ul class="text-left space-y-3 mb-4 bg-black/20 p-4 rounded-lg">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-envelope text-red-400 mt-1 mr-2"></i>
+                                        <span><strong>Option 1:</strong> Drop the prepaid envelope at any India Post box.</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fab fa-whatsapp text-green-400 mt-1 mr-2"></i>
+                                        <span><strong>Option 2:</strong> Schedule a reverse pickup via WhatsApp. Send "Hi" to <a href="https://wa.me/918068286500" class="text-green-400 underline hover:text-white">+91 80 6828 6500</a> (DKMS) to check availability or visit the <a href="https://www.dkms-india.org/get-involved/campaigns/reverse-pickup" target="_blank" class="text-red-400 underline">Reverse Pickup Page</a>.</span>
+                                    </li>
+                                </ul>
+                                <p class="text-sm text-gray-500"><i class="fas fa-truck text-green-400 mr-2"></i>Tracking number included for peace of mind</p>
+                            </div>
+                        </div>
+                         <div class="md:w-1/2 w-full hidden md:block">
+                            <div class="glass-card p-6">
+                                <i class="fas fa-envelope text-5xl md:text-6xl neon-red mb-4"></i>
+                                <p class="text-sm text-gray-400">No postage fee • Labs process within 4 weeks</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row-reverse items-center gap-6 md:gap-8 fade-in">
+                        <div class="md:w-1/2 md:text-left w-full">
+                            <div class="glass-card p-6 md:p-8 inline-block w-full">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 md:w-16 md:h-16 bg-green-600 rounded-full flex items-center justify-center text-xl md:text-2xl font-bold mr-4 flex-shrink-0">✓</div>
+                                    <h3 class="text-xl md:text-2xl font-bold">You're Now on the Registry!</h3>
+                                </div>
+                                <p class="text-gray-300 leading-relaxed mb-3 text-sm md:text-base">
+                                     Your HLA profile is added to the global database. You'll be notified <strong class="text-white">only if</strong> you're a match for a patient. Until then, simply live your life.
+                                </p>
+                                <p class="text-sm text-gray-500"><i class="fas fa-bell text-purple-400 mr-2"></i>Average wait: Never called OR called within 5-10 years</p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 w-full hidden md:block">
+                            <div class="glass-card p-6">
+                                <i class="fas fa-database text-5xl md:text-6xl neon-red mb-4"></i>
+                                <p class="text-sm text-gray-400">You're a potential hero for someone, somewhere</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-b from-red-950/10 to-black">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Movie Myths vs. <span class="neon-red">Medical Reality</span></h2>
+                <p class="text-lg md:text-xl text-gray-400">Let's separate Hollywood fiction from actual science</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                <div class="fade-in">
+                    <div class="bg-red-950/30 border-2 border-red-900 rounded-2xl p-6 md:p-8 h-full">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-film text-3xl md:text-5xl text-red-600 mr-4"></i>
+                            <h3 class="text-2xl md:text-3xl font-bold">The Myth</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="bg-black/40 p-4 md:p-6 rounded-lg">
+                                <p class="font-semibold text-red-400 mb-3 text-base md:text-lg"><i class="fas fa-times-circle mr-2"></i>"It's a painful spinal surgery"</p>
+                                <p class="text-gray-400 text-sm">Movies show donors being put under anesthesia with giant needles extracting bone marrow from the spine. Dramatic? Yes. Accurate? Not anymore.</p>
+                            </div>
+                            <div class="bg-black/40 p-4 md:p-6 rounded-lg">
+                                <p class="font-semibold text-red-400 mb-3 text-base md:text-lg"><i class="fas fa-times-circle mr-2"></i>"Recovery takes months"</p>
+                                <p class="text-gray-400 text-sm">The old bone marrow harvesting method required hospital stays and weeks of recovery. Modern methods have changed everything.</p>
+                            </div>
+                            <div class="bg-black/40 p-4 md:p-6 rounded-lg">
+                                <p class="font-semibold text-red-400 mb-3 text-base md:text-lg"><i class="fas fa-times-circle mr-2"></i>"Your own health is at risk"</p>
+                                <p class="text-gray-400 text-sm">Stem cells regenerate within 4-6 weeks. You won't be "weaker" or lose immunity. Your body produces millions of stem cells daily.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="bg-green-950/30 border-2 border-green-700 rounded-2xl p-6 md:p-8 h-full">
+                        <div class="flex items-center mb-6">
+                            <i class="fas fa-check-circle text-3xl md:text-5xl text-green-500 mr-4"></i>
+                            <h3 class="text-2xl md:text-3xl font-bold">The Reality</h3>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="bg-black/40 p-4 md:p-6 rounded-lg">
+                                <p class="font-semibold text-green-400 mb-3 text-base md:text-lg"><i class="fas fa-check-circle mr-2"></i>PBSC Method: Like Blood Donation</p>
+                                <p class="text-gray-300 text-sm mb-3">90% of donations now use Peripheral Blood Stem Cell (PBSC) collection. You sit in a chair for 4-6 hours while a machine collects stem cells from your bloodstream via an IV - similar to donating platelets.</p>
+                                <p class="text-xs text-gray-500"><strong>Pre-donation:</strong> You'll receive injections of Filgrastim for 4-5 days to boost stem cell production. Side effects: bone aches (like flu symptoms) that resolve within 2 days post-donation.</p>
+                            </div>
+                            <div class="bg-black/40 p-4 md:p-6 rounded-lg">
+                                <p class="font-semibold text-green-400 mb-3 text-base md:text-lg"><i class="fas fa-check-circle mr-2"></i>Back to Normal in Days</p>
+                                <p class="text-gray-300 text-sm">Most donors return to work within 1-2 days. No surgery scars. No long-term effects. Just temporary fatigue and achiness.</p>
+                            </div>
+                            <div class="bg-black/40 p-4 md:p-6 rounded-lg">
+                                <p class="font-semibold text-green-400 mb-3 text-base md:text-lg"><i class="fas fa-check-circle mr-2"></i>Full Medical Coverage</p>
+                                <p class="text-gray-300 text-sm">DKMS covers all costs: medical exams, travel, accommodation, lost wages. You pay nothing. Your insurance isn't touched.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 md:mt-12 glass-card p-6 md:p-8 fade-in">
+                <h4 class="text-xl md:text-2xl font-bold mb-4 text-center">What About the Other 10%?</h4>
+                <p class="text-gray-300 leading-relaxed mb-4 text-sm md:text-base">
+                    In rare cases, doctors may request bone marrow harvesting (the old method) if the patient needs specific cell types. This involves general anesthesia and extracting marrow from the pelvic bone. Recovery is 2-4 weeks with soreness at the extraction site. You can decline this method if you're only comfortable with PBSC.
+                </p>
+                <p class="text-sm text-gray-500 text-center"><i class="fas fa-info-circle text-blue-400 mr-2"></i>You'll always be informed of the method before confirming donation</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="eligibility" class="py-16 md:py-24 px-4 md:px-6">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Can <span class="neon-red">You</span> Register?</h2>
+                <p class="text-lg md:text-xl text-gray-400">Quick eligibility check - these are safety guidelines, not personal judgments</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                <div class="glass-card p-6 md:p-8 border-2 border-green-700/50 fade-in">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-check-circle text-4xl md:text-5xl text-green-500 mr-4"></i>
+                        <h3 class="text-2xl md:text-3xl font-bold">You're Good to Go If:</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-birthday-cake text-green-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">Age: 18-55 years</p>
+                                <p class="text-sm text-gray-400">You can register until age 55, but you're eligible to donate until age 61</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-weight text-green-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">BMI: 18-40</p>
+                                <p class="text-sm text-gray-400">Higher BMI affects anesthesia safety if bone marrow harvesting is needed</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-heartbeat text-green-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">Generally Healthy</p>
+                                <p class="text-sm text-gray-400">No chronic conditions that affect blood or immunity</p>
+                            </div>
+                        </li>
+                         <li class="flex items-start">
+                            <i class="fas fa-baby text-green-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">Pregnancy/Breastfeeding</p>
+                                <p class="text-sm text-gray-400">You can register, but actual donation must wait until 6 months post-delivery/weaning</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card p-6 md:p-8 border-2 border-red-700/50 fade-in">
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-exclamation-triangle text-4xl md:text-5xl text-red-500 mr-4"></i>
+                        <h3 class="text-2xl md:text-3xl font-bold">You Cannot Register If:</h3>
+                    </div>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-virus text-red-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">Blood-Borne Infections</p>
+                                <p class="text-sm text-gray-400">HIV, Hepatitis B/C, HTLV, syphilis</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-disease text-red-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">Autoimmune Diseases</p>
+                                <p class="text-sm text-gray-400">Lupus, rheumatoid arthritis, Crohn's, Type 1 diabetes</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-lungs text-red-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">Chronic Lung/Heart Issues</p>
+                                <p class="text-sm text-gray-400">Severe asthma, COPD, heart disease</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-pills text-red-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">Active Cancer History</p>
+                                <p class="text-sm text-gray-400">Current cancer or treatment within the past 5 years</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-syringe text-red-400 mr-3 mt-1"></i>
+                            <div>
+                                <p class="font-semibold text-white">IV Drug Use</p>
+                                <p class="text-sm text-gray-400">Risk of undetected blood-borne pathogens</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+             <div class="mt-12 text-center fade-in">
+                <div class="glass-card p-8 inline-block max-w-3xl">
+                    <i class="fas fa-user-md text-4xl neon-red mb-4"></i>
+                    <p class="text-lg text-gray-300 mb-4">
+                        If you're on the fence about a specific condition, register anyway! DKMS will conduct a full health screening if you're ever matched. It's better to be on the registry and potentially excluded later than to never register at all.
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        Medical guidelines are reviewed case-by-case. Past depression, mild asthma, or controlled hypertension don't automatically disqualify you.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-b from-black to-red-950/10">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Why Trust <span class="neon-red">DKMS-BMST</span>?</h2>
+                <p class="text-xl text-gray-400">Transparency, credibility, and a 30-year global track record</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8 mb-12">
+                <div class="glass-card p-6 md:p-8 text-center fade-in">
+                    <i class="fas fa-globe text-4xl md:text-5xl neon-red mb-4"></i>
+                    <h4 class="text-xl font-bold mb-3">Global Non-Profit</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Founded in Germany (1991), DKMS operates in 7 countries. DKMS-BMST India launched in 2013 as a joint venture with Bangalore Medical Services Trust.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-8 text-center fade-in">
+                    <i class="fas fa-award text-4xl md:text-5xl neon-red mb-4"></i>
+                    <h4 class="text-xl font-bold mb-3">12 Million Donors</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        DKMS is the world's largest stem cell donor registry. Over 100,000 transplants facilitated globally. In India: 500,000+ registered donors.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 md:p-8 text-center fade-in">
+                    <i class="fas fa-lock text-4xl md:text-5xl neon-red mb-4"></i>
+                    <h4 class="text-xl font-bold mb-3">Your Privacy Matters</h4>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Your HLA data is anonymized with a unique ID. Patients never see your name until after donation (if you both consent). GDPR & Indian data laws compliant.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-16 md:py-24 px-4 md:px-6">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-12 md:mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Your Questions, <span class="neon-red">Answered</span></h2>
+                <p class="text-xl text-gray-400">Everything you need to know before registering</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Does the swab or donation hurt?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                            The cheek swab is completely painless - it's like brushing the inside of your mouth. If you're ever called to donate (1 in 1,000 chance), the PBSC method feels like donating platelets: a minor pinch from the IV, then just sitting for a few hours. You may experience bone aches for 1-2 days from the pre-donation injections, but nothing severe. Think flu-like discomfort, not surgery pain.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Who pays for all of this?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                            You pay <strong class="text-white">₹0</strong>. DKMS is funded by donations and grants. The swab kit, lab processing, and shipping are all free. If you're ever matched, the patient's insurance/hospital covers donation-related costs (medical exams, travel, hotel, meals, lost wages). Your personal health insurance is never billed.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Can I back out if I'm matched?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                             Technically, yes. But here's the ethical weight: once a patient's doctors confirm you as "the match," they begin chemotherapy to destroy the patient's existing immune system. This leaves them with zero defenses - they'll die within weeks without your donation. Backing out at that stage is essentially a death sentence for them. DKMS asks you to only register if you're truly committed.
+                        </p>
+                    </div>
+                </div>
+
+                 <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">What are the side effects?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <div class="text-gray-400 pb-6 text-sm md:text-base">
+                            <p class="mb-3"><strong class="text-white">PBSC Method (90% of cases):</strong></p>
+                            <ul class="list-disc ml-6 space-y-2 mb-4">
+                                <li><strong>During Filgrastim injections:</strong> Bone aches, headaches, fatigue (similar to flu symptoms). Managed with over-the-counter painkillers.</li>
+                                <li><strong>During collection:</strong> Tingling in lips/fingers (from calcium loss), nausea, dizziness. Nurses monitor you closely.</li>
+                                <li><strong>Post-donation:</strong> Symptoms resolve within 2-7 days. No long-term effects reported in 30 years of data.</li>
+                            </ul>
+                            <p class="mb-3"><strong class="text-white">Bone Marrow Harvesting (10% of cases):</strong></p>
+                            <ul class="list-disc ml-6 space-y-2">
+                                <li><strong>Post-procedure:</strong> Soreness/stiffness at extraction site (lower back/hips) for 1-2 weeks. Pain peaks at day 2-3.</li>
+                                <li><strong>Rare risks:</strong> Infection at extraction site (<0.1%), anesthesia complications (standard surgical risks).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Will my stem cells regenerate?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                            Yes, 100%. Your bone marrow produces <strong class="text-white">200 billion</strong> new blood cells every day. Donated stem cells (usually 1-5% of your total supply) regenerate within <strong class="text-white">4-6 weeks</strong>. You won't have weaker immunity, lower blood counts, or any permanent loss. It's like donating blood - your body replenishes what was taken.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Can I donate more than once?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                             Yes, but it's rare. If the same patient needs a "boost" donation months later (5-10% of cases), you'd be asked again. You can also be matched with a different patient years later. There's no lifetime limit on donations, but each one requires new health clearance.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Will I meet the recipient?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                            Maybe. Most countries enforce a 2-year anonymity period post-donation. After that, if both you and the recipient consent, DKMS can facilitate contact (letters first, then emails/calls). Some donors and recipients become lifelong friends. Others prefer to stay anonymous forever. It's entirely your choice.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">What if I move or change my contact info?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                             You <strong class="text-white">must</strong> update your details on the DKMS portal. If they can't reach you when you're matched, they move to the next potential donor - and a patient may miss their only shot at survival.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Can I donate if I have tattoos/piercings?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                             Yes, as long as they were done with sterile equipment. If you got a tattoo/piercing in the past 12 months from an unlicensed facility, you'll need to wait for blood tests to rule out infections. Recent body modifications from reputable studios are fine.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">What if I'm on medication?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <div class="text-gray-400 pb-6 text-sm md:text-base">
+                            <p class="mb-3">It depends on the condition being treated:</p>
+                            <ul class="list-disc ml-6 space-y-2">
+                                <li><strong class="text-white">Usually OK:</strong> Birth control, antidepressants, blood pressure meds, thyroid medication, mild asthma inhalers</li>
+                                <li><strong class="text-white">Case-by-case:</strong> Biologics, immunosuppressants, anticoagulants</li>
+                                <li><strong class="text-white">Disqualifying:</strong> Chemotherapy, isotretinoin (Accutane), certain psoriasis drugs</li>
+                            </ul>
+                            <p class="mt-3">Register anyway - DKMS doctors review your meds if you're matched.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">How often does DKMS follow up?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                             You'll receive an annual email reminder to update your contact info. Otherwise, DKMS won't spam you - they only reach out if you're matched or if there's a critical registry update.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden fade-in">
+                    <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center hover:bg-white/5 transition-all" onclick="toggleAccordion(this)">
+                        <span class="font-semibold text-lg pr-4">Is my data sold?</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <p class="text-gray-400 pb-6 text-sm md:text-base">
+                             <strong class="text-white">Never.</strong> Your HLA data is only shared with the global WMDA registry (for matching purposes) and treating doctors (if you're matched). DKMS does not sell donor info to pharma companies or research labs without explicit consent.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-b from-red-950/20 to-black">
+        <div class="container mx-auto max-w-4xl text-center">
+            <div class="fade-in">
+                <h2 class="text-3xl md:text-6xl font-bold mb-6">The Only Thing Standing<br>Between Life and Death?</h2>
+                <p class="text-2xl md:text-3xl neon-red font-semibold mb-12">A Swab. 3 Minutes. You.</p>
+                
+                <div class="glass-card p-6 md:p-12 mb-12">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                        <div>
+                            <p class="text-4xl md:text-5xl font-bold neon-red mb-2">5 min</p>
+                            <p class="text-gray-400">To Register Online</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl md:text-5xl font-bold neon-red mb-2">3 swabs</p>
+                            <p class="text-gray-400">In the Comfort of Home</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl md:text-5xl font-bold neon-red mb-2">1 life</p>
+                            <p class="text-gray-400">You Could Save</p>
+                        </div>
+                    </div>
+                    
+                    <a href="https://www.dkms-bmst.org/register" target="_blank" class="inline-block bg-neon-red px-8 py-4 md:px-16 md:py-6 rounded-full text-xl md:text-2xl font-bold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-red-500/50 pulse-ring w-full md:w-auto">
+                        <i class="fas fa-hand-holding-heart mr-3"></i> Register Now - It's Free
+                    </a>
+                    
+                    <div class="text-left max-w-2xl mx-auto text-gray-400 leading-relaxed mt-8">
+                        <p class="mb-4">
+                            <strong class="text-white">Still on the fence?</strong> That's understandable. Bookmark this page. Share it with a friend. Sleep on it. But remember: every day you wait, someone with your genetic match might be running out of time.
+                        </p>
+                        <p>
+                            The average wait time for a matching donor in India is 60-90 days. For some patients, that's longer than they have. You can't predict when a stranger halfway across the country will need your unique HLA profile. But you can be ready when that moment comes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="relative py-12 md:py-16 px-4 md:px-6 bg-gradient-to-br from-red-950 to-black border-t border-red-900/50">
+        <div class="container mx-auto max-w-4xl">
+            <div class="glass-card p-6 md:p-10 text-center">
+                <i class="fas fa-birthday-cake text-5xl md:text-6xl neon-red mb-6 animate-float"></i>
+                <h3 class="text-2xl md:text-3xl font-bold mb-6">A Personal Birthday Wish</h3>
+                <div class="text-base md:text-lg text-gray-300 leading-relaxed mb-8 space-y-4">
+                    <p>
+                        For my birthday this year, I’m trading gifts for potential lifesavers. Patients waiting for a match are running out of time.
+                    </p>
+                    <p class="font-semibold text-white">
+                        My only wish is for you to register—it takes 5 minutes and could save a life. No cake needed, just your swab.
+                    </p>
+                    <p class="text-sm text-gray-500 italic mt-6">
+                        And if by some miracle, you're the 1 in a million who gets matched and donates, please let me know. That would be the best belated birthday gift I could ever receive.
+                    </p>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8 mt-8">
+                    <p class="text-gray-500 text-sm mb-4">Thank you for taking the time to read this.</p>
+                    <a href="https://www.dkms-bmst.org/register" target="_blank" class="inline-block bg-neon-red px-8 py-4 md:px-10 rounded-full text-lg font-semibold hover:scale-105 transition-all duration-300 w-full sm:w-auto">
+                        <i class="fas fa-gift mr-2"></i> Grant This Wish
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center">
+                <div class="mb-6">
+                    <h4 class="text-lg md:text-xl font-semibold mb-4 text-gray-400">Verified Sources & Official Links</h4>
+                    <div class="flex flex-wrap justify-center gap-4 text-sm">
+                        <a href="https://www.dkms-bmst.org" target="_blank" class="text-red-400 hover:text-red-300 hover:underline"><i class="fas fa-external-link-alt mr-1"></i> DKMS-BMST Official</a>
+                        <a href="https://bethematch.org" target="_blank" class="text-red-400 hover:text-red-300 hover:underline"><i class="fas fa-external-link-alt mr-1"></i> Be The Match (US)</a>
+                        <a href="https://wmda.info" target="_blank" class="text-red-400 hover:text-red-300 hover:underline"><i class="fas fa-external-link-alt mr-1"></i> WMDA Registry</a>
+                    </div>
+                </div>
+
+                <div class="text-sm text-gray-600 space-y-2">
+                    <p><i class="fas fa-robot mr-2 text-gray-500"></i>Built using AI to spread awareness. Not affiliated with DKMS-BMST.</p>
+                    <p>© 2025 Personal Stem Cell Drive Initiative.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            menu.classList.toggle('open');
+        }
+
+        btn.addEventListener('click', toggleMobileMenu);
+
+        // Scroll Fade-In Animation
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        
+        // Accordion Functionality
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            const allContents = document.querySelectorAll('.accordion-content');
+            const allIcons = document.querySelectorAll('.accordion-trigger i');
+            
+            allContents.forEach(item => {
+                if (item !== content) item.classList.remove('active');
+            });
+            allIcons.forEach(item => {
+                if (item !== icon) item.style.transform = 'rotate(0deg)';
+            });
+            
+            content.classList.toggle('active');
+            icon.style.transform = content.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+        
+        // Video Load
+        function loadVideo() {
+            const placeholder = document.getElementById('video-placeholder');
+            placeholder.innerHTML = `
+                <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/hKH7GwX2JrA?autoplay=1" 
+                    title="DKMS Swab Instructions" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    class="rounded-lg"
+                ></iframe>
+            `;
+        }
+        
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    if(menu.classList.contains('open')) toggleMobileMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
